@@ -1,0 +1,12 @@
+<div>
+  <div>
+    <button {{on "click" this.onModifyClick}}>Modify</button>
+  </div>
+  <button {{on "click" this.onDrawClick}}>Draw</button>
+  <button {{on "click" this.onKeepDrawingClick}}>Keep drawing</button>
+  {{#each this.drawnTokens as |token|}}
+    <div>
+      {{token.id}}
+    </div>
+  {{/each}}
+</div>
