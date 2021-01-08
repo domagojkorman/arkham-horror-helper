@@ -20,21 +20,11 @@
     "baseUrl": ".",
     "module": "es6",
     "experimentalDecorators": true,
-    "paths": {
-      "arkham-horror-helper/tests/*": [
-        "tests/*"
-      ],
-      "arkham-horror-helper/*": [
-        "app/*"
-      ],
-      "*": [
-        "types/*"
-      ]
-    }
   },
   "include": [
     "app/**/*",
     "tests/**/*",
-    "types/**/*"
+    "types/**/*",
+    "scripts/*"
   ]
 }
