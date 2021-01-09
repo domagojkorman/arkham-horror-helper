@@ -3,6 +3,7 @@ import {action} from '@ember/object';
 import {tracked} from '@glimmer/tracking';
 import cards from 'arkham-horror-helper/models/cards';
 import {A as emberArray } from '@ember/array';
+import CardModel from 'arkham-horror-helper/models/card';
 
 const Phase = {
   ENCOUNTER: 'encounter',
@@ -36,28 +37,22 @@ export default class IndexController extends Controller {
   }
 
   get cardSets() {
-    return cards.filter((card) => !['scenario', 'location', 'act', 'agenda'].includes(card.type))
-      .filter((card) => Boolean(card.encounter))
-      .map((card) => {
-        const deckCard = this.encounterDeck.find((encounter) => card.id === encounter.id);
-        return {...card, isInDeck: Boolean(deckCard)};
-      })
-      .reduce((sets, card) => {
-        const existingSet = sets.find((set) => set.name === card.encounter);
-        const set = existingSet || {name: card.encounter, cards: []};
-        if (!existingSet) {
-          sets.push(set);
-        }
-        set.cards.push(card);
+    return cards.reduce((sets, card) => {
+      const isValidCardType = !['scenario', 'location', 'act', 'agenda'].includes(card.type)
+      const isEncounter = Boolean(card.encounter);
+      const isCardInDeck = Boolean(this.encounterDeck.find((encounter) => card.id === encounter.id));
+      if (!isValidCardType || !isEncounter || isCardInDeck) {
         return sets;
-      }, [])
-      .map((set) => {
-        const isInDeck = set.cards.every((card) => {
-          const deckCard = this.encounterDeck.find((encounter) => card.id === encounter.id);
-          return Boolean(deckCard);
-        });
-        return {...set, isInDeck};
-      })
+      }
+
+      const existingSet = sets.find((set) => set.name === card.encounter);
+      const set = existingSet || {name: card.encounter, cards: []};
+      if (!existingSet) {
+        sets.push(set);
+      }
+      set.cards.push(card);
+      return sets;
+    }, [])
       .filter((set) => {
         const searchInSetName = set.name.toLowerCase().includes(this.search);
         const searchInSetCardName = set.cards.any((card) => card.name.toLowerCase().includes(this.search));
@@ -87,13 +82,35 @@ export default class IndexController extends Controller {
       const deckCard = this.encounterDeck.find((encounter) => encounter.id === card.id);
       return !deckCard;
     })
-      .forEach((card) => this.encounterDeck.pushObject({...card, amount: card.quantity}))
+      .forEach((card) => this.encounterDeck.pushObject(new CardModel(card)))
   }
 
   @action onAddCardClick(card) {
     if (!card.isInDeck) {
-      this.encounterDeck.pushObject({...card, amount: card.quantity});
+      this.encounterDeck.pushObject(new CardModel(card));
     }
+  }
+
+  @action onRemoveSetClick(set) {
+    this.encounterDeck = this.encounterDeck.filter((card) => {
+      return !set.cards.find((setCard) => setCard.id === card.id)
+    });
+  }
+
+  @action onDecrementCardClick(card) {
+    if (card.amount === 1) {
+      this.encounterDeck = this.encounterDeck.filter((deckCard) => deckCard.id !== card.id);
+    }
+
+    card.amount = card.amount - 1;
+  }
+
+  @action onIncrementCardClick(card) {
+    if (card.quantity === card.amount) {
+      return;
+    }
+
+    card.amount = card.amount + 1;
   }
 
   @action onBackClick() {
