@@ -69,7 +69,7 @@
     "accessor-pairs": ["error", { "setWithoutGet": true, "getWithoutSet": false, "enforceForClassMembers": true }],
     "array-callback-return": "error",
     "block-scoped-var": "error",
-    "class-methods-use-this": "error",
+    "class-methods-use-this": "off",
     "complexity": "off",
     "consistent-return": ["error", { "treatUndefinedAsUnspecified": false }],
     "curly": ["error", "all"],

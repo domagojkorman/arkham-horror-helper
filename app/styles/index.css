@@ -1,0 +1,20 @@
+.encounter-root {
+  display: flex;
+  flex-direction: row;
+}
+
+.encounter-column {
+  flex: 1;
+}
+
+.encounter-ul {
+
+}
+
+.encounter-li {
+
+}
+
+.encounter-img {
+  width: 80px;
+}

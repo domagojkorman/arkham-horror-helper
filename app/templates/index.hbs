@@ -1,4 +1,75 @@
 <div class="root">
-  {{log this.tokens}}
-  <TokenBag @tokens={{this.tokens}}/>
+  {{#unless this.isGamePhase}}
+    <div class="header">
+      {{#unless this.isEncounterDeckPhase}}
+        <button class="button" type="button" {{on "click" this.onBackClick}}>
+          Back
+        </button>
+      {{/unless}}
+      <h1>{{this.title}}</h1>
+      <button class="button" type="button" {{on "click" this.onNextClick}}>
+        Next
+      </button>
+    </div>
+  {{/unless}}
+  {{#if this.isEncounterDeckPhase}}
+    <input
+      class="input"
+      type="text"
+      placeholder="Search"
+      value={{this.search}}
+      {{on "input" this.onSearchChange}}
+    />
+    <div class="encounter-root">
+      <div class="encounter-column">
+        <ul class="encounter-ul">
+          {{#each this.cardSets as |set|}}
+            <li class="encounter-li">
+              <button class="button-wrapper" type="button" {{on "click" (fn this.onAddSetClick set)}}>
+
+                {{set.name}}
+              </button>
+            </li>
+            <ul>
+              {{#each set.cards as |card|}}
+                <li>
+                  <button class="button-wrapper" type="button" {{on "click" (fn this.onAddCardClick card)}}>
+                    <img class="encounter-img" src={{card.frontImg}} alt={{card.name}}/>
+
+                    {{card.name}} {{if card.isInDeck 'In Deck'}}
+                  </button>
+                </li>
+              {{/each}}
+            </ul>
+          {{/each}}
+        </ul>
+      </div>
+      <div class="encounter-column">
+        <ul>
+          {{#each this.encounterCardSets as |set|}}
+            <li>
+              <button type="button" {{on "click" (fn this.onRemoveSetClick set)}}>
+                {{set.name}} {{if set.isInDeck 'In Deck'}}
+              </button>
+            </li>
+            <ul>
+              {{#each set.cards as |card|}}
+                <li>
+                  <div>
+                    <div>{{card.name}}</div>
+                    <div>Controls are here</div>
+                  </div>
+                </li>
+              {{/each}}
+            </ul>
+          {{/each}}
+        </ul>
+      </div>
+    </div>
+  {{!-- Assemble deck ui --}}
+  {{else if this.isTokensBagPhase}}
+  {{!-- Assemble tokens --}}
+  {{else}}
+    {{!-- <TokenBag @tokens={{this.tokens}}/> --}}
+  {{/if}}
 </div>
