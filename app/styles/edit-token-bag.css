@@ -14,17 +14,40 @@
   }
 }
 
+.edit-token-bag {
+  display: flex;
+  flex-direction: row;
+}
+
+.edit-token-column {
+  flex: 1;
+  padding: 32px 0px;
+}
+
 .edit-token-bag-tokens {
   display: grid;
-  grid-template-columns: repeat(8, 80px);
-  gap: 12px;
+  grid-template-columns: repeat(4, 80px);
+  gap: 16px;
   justify-content: center;
 }
 
 .edit-token-bag-bag-tokens {
   display: grid;
-  gap: 12px;
-  grid-template-columns: repeat(auto-fill, 80px);
+  gap: 16px;
+  grid-template-columns: repeat(4, 80px);
+  justify-content: center;
+}
+
+.edit-token-bag-divider {
+  width: 2px;
+  background: linear-gradient(#eee, #333 20%, #333 80%, #eee);
+  margin: 0px 48px;
+}
+
+.edit-token-bag-title {
+  font-size: 32px;
+  text-align: center;
+  margin-bottom: 32px;
 }
 
 .edit-token-bag-bag-tokens > * {
