@@ -1,0 +1,18 @@
+<div
+  class="token"
+  ...attributes
+  {{classes
+    is-ghoul=(equal @token.type "ghoul")
+    is-cultist=(equal @token.type "cultist")
+    is-tentacle=(equal @token.type "tentacle")
+    is-success=(equal @token.type "success")
+    is-fail=(equal @token.type "fail")
+    is-skull=(equal @token.type "skull")
+  }}
+>
+  {{#if (equal @token.type "number")}}
+    <div class="token-text">{{@token.value}}</div>
+  {{else}}
+    {{svg-jar @token.img class="token-img"}}
+  {{/if}}
+</div>

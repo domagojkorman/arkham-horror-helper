@@ -1,0 +1,18 @@
+<div ...attributes>
+  <h1>Tokens</h1>
+  <div class="edit-token-bag-tokens">
+    {{#each this.tokens as |token|}}
+      <button type="button" {{on "click" (fn this.onAddTokenClick token)}}>
+        <Token @token={{token}}/>
+      </button>
+    {{/each}}
+  </div>
+  <h1>Token Bag</h1>
+  <div class="edit-token-bag-bag-tokens">
+    {{#each this.tokenBag key="id" as |token|}}
+      <button type="button" {{on "click" (fn this.onRemoveTokenClick token)}}>
+        <Token @token={{token}}/>
+      </button>
+    {{/each}}
+  </div>
+</div>

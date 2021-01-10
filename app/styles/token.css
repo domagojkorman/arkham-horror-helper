@@ -1,0 +1,59 @@
+.token {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  padding: 12px;
+  border-radius: 120px;
+  background: radial-gradient(#d4d3cb, #a7a275);
+  border: 4px solid #333;
+  box-shadow: 2px 2px 4px #777;
+  transition: transform 200ms;
+}
+
+.token:hover {
+  transform: scale(1.15);
+}
+
+.token.is-ghoul {
+  background: radial-gradient(#eaeeb1, #968c26);
+}
+
+.token.is-cultist {
+  background: radial-gradient(#cfddcf, #46a853);
+}
+
+.token.is-tentacle {
+  background: radial-gradient(#bab6df, #757ac4);
+}
+
+.token.is-skull {
+  background: radial-gradient(#d3d2c9, #83827b);
+}
+
+.token.is-success {
+  background: radial-gradient(#9ebee2, #3ba0e4);
+}
+
+.token.is-fail {
+  background: radial-gradient(#f0a58a, #df675f)
+}
+
+.token-img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+}
+
+.token-img path {
+  fill: #000;
+}
+
+.token-text {
+  font-family: fantasy;
+  font-weight: bolder;
+  font-size: 40px;
+  width: 100%;
+  text-align: center;
+  line-height: 54px;
+}
