@@ -1,8 +1,13 @@
 <button
   class="button"
+  theme={{if @icon "icon" "default"}}
   type="button"
   ...attributes
   {{on "click" @onClick}}
 >
-  {{yield}}
+  {{#if @icon}}
+    {{svg-jar (concat "ic-" @icon) class="button-img"}}
+  {{else}}
+    {{yield}}
+  {{/if}}
 </button>

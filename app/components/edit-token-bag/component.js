@@ -6,14 +6,14 @@ import {tracked} from '@glimmer/tracking';
 
 export default class EditTokenBagComponent extends Component {
 
-  @tracked tokenBag = this.args.bag || emberArray();
+  @tracked tokenBag = this.args.tokens || [];
 
   get tokens() {
     return tokens.sort((a, b) => a.order - b.order);
   }
 
   @action onAddTokenClick(token) {
-    this.tokenBag.pushObject({...token, id: Date.now().toString()})
+    this.tokenBag = this.tokenBag.concat({...token, id: Date.now().toString()});
     this.tokenBag.sort((a, b) => a.order - b.order);
   }
 

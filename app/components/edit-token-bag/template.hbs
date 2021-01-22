@@ -1,23 +1,29 @@
-<div class="edit-token-bag" ...attributes>
-  <div class="edit-token-column">
-    <h1 class="edit-token-bag-title">Tokens</h1>
-    <div class="edit-token-bag-tokens">
-      {{#each this.tokens as |token|}}
-        <button type="button" {{on "click" (fn this.onAddTokenClick token)}}>
-          <Token @token={{token}}/>
-        </button>
-      {{/each}}
+<div ...attributes>
+  <div class="edit-token-bag-columns" ...attributes>
+    <div class="edit-token-column">
+      <h1 class="edit-token-bag-title">Tokens</h1>
+      <div class="edit-token-bag-tokens">
+        {{#each this.tokens as |token|}}
+          <button type="button" {{on "click" (fn this.onAddTokenClick token)}}>
+            <Token @token={{token}}/>
+          </button>
+        {{/each}}
+      </div>
+    </div>
+    <div class="edit-token-bag-divider"/>
+    <div class="edit-token-column">
+      <h1 class="edit-token-bag-title">Token Bag</h1>
+      <div class="edit-token-bag-bag-tokens">
+        {{#each this.tokenBag key="id" as |token|}}
+          <button type="button" {{on "click" (fn this.onRemoveTokenClick token)}}>
+            <Token @token={{token}}/>
+          </button>
+        {{/each}}
+      </div>
     </div>
   </div>
-  <div class="edit-token-bag-divider"/>
-  <div class="edit-token-column">
-    <h1 class="edit-token-bag-title">Token Bag</h1>
-    <div class="edit-token-bag-bag-tokens">
-      {{#each this.tokenBag key="id" as |token|}}
-        <button type="button" {{on "click" (fn this.onRemoveTokenClick token)}}>
-          <Token @token={{token}}/>
-        </button>
-      {{/each}}
-    </div>
+  <div class="edit-token-bag-buttons">
+    <Button class="edit-token-bag-button" @onClick={{fn @onChange this.tokenBag}}>Confirm</Button>
+    <Button class="edit-token-bag-button" @onClick={{fn @onChange @tokens}}>Discard</Button>
   </div>
 </div>

@@ -1,0 +1,31 @@
+.token-bag-area {
+  position: relative;
+}
+
+.token-bag-area-background {
+  background-color: #0006;
+  color: #fff;
+  font-size: 20px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.token-bag-area-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 16px 0;
+}
+
+.token-bag-area-tokens {
+  display: grid;
+  grid-template-columns: repeat(4, 80px);
+}

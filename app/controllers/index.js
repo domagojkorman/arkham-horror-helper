@@ -2,7 +2,6 @@ import Controller from '@ember/controller';
 import {action} from '@ember/object';
 import {tracked} from '@glimmer/tracking';
 import cards from 'arkham-horror-helper/models/cards';
-import tokens from 'arkham-horror-helper/models/tokens';
 import {A as emberArray } from '@ember/array';
 import CardModel from 'arkham-horror-helper/models/card';
 
@@ -16,10 +15,7 @@ export default class IndexController extends Controller {
   @tracked phase = Phase.ENCOUNTER
   @tracked search = ''
   @tracked encounterDeck = emberArray();
-
-  get tokens() {
-    return tokens;
-  }
+  @tracked tokens = []
 
   get title() {
     switch (this.phase) {
@@ -137,5 +133,9 @@ export default class IndexController extends Controller {
       break;
     default: //do nothing
     }
+  }
+
+  @action onTokenBagChange(tokens) {
+    this.tokens = tokens;
   }
 }

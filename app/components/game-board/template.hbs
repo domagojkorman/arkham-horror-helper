@@ -1,1 +1,5 @@
-{{yield}}
+<div class="game-board">
+  <TokenBagArea class="game-board-token-bag" @tokens={{this.tokens}}/>
+  <DeckArea class="game-board-deck" @cards={{this.cards}}/>
+  <PlayArea class="game-board-play" @cards={{this.cards}}/>
+</div>

@@ -14,7 +14,7 @@
   }
 }
 
-.edit-token-bag {
+.edit-token-bag-columns {
   display: flex;
   flex-direction: row;
 }
@@ -52,4 +52,15 @@
 
 .edit-token-bag-bag-tokens > * {
   animation: appear 250ms ease-out forwards;
+}
+
+.edit-token-bag-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 24px;
+}
+
+.edit-token-bag-button {
+  margin: 0px 16px;
 }
