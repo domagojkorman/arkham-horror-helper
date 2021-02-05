@@ -1,0 +1,42 @@
+.game-board {
+  display: grid;
+  grid-template-columns: 4fr 400px;
+  grid-template-rows: repeat(2, 1fr);
+  overflow: hidden;
+  height: 100%;
+}
+
+.game-board-dialog {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 64px;
+  z-index: 1;
+  background-color: #0007;
+  overflow: auto;
+}
+
+.game-board-dialog-content {
+  background-color: #fff;
+  padding: 32px;
+  border-radius: 8px;
+  border: 1px solid #777;
+}
+
+.game-board-deck {
+  grid-column: 1;
+  grid-row: 1 / -1;
+}
+
+.game-board-play {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.game-board-tokens {
+  grid-column: 2;
+  grid-row: 1;
+}

@@ -1,0 +1,17 @@
+<div class="card" ...attributes>
+  {{#if @onClick}}
+    <button type="button" {{on "click" (fn @onClick @card)}}>
+      <img
+        class="card-img"
+        src={{if @isBack @card.backImg @card.frontImg}}
+        alt={{@card.name}}
+      />
+    </button>
+  {{else}}
+    <img
+      class="card-img"
+      src={{if @isBack @card.backImg @card.frontImg}}
+      alt={{@card.name}}
+    />
+  {{/if}}
+</div>

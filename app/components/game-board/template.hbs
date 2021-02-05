@@ -1,5 +1,19 @@
 <div class="game-board">
-  <TokenBagArea class="game-board-token-bag" @tokens={{this.tokens}}/>
+  {{#if this.isEditMode}}
+    <div class="game-board-dialog">
+      <div class="game-board-dialog-content">
+        {{#if this.isEditTokensMode}}
+          <EditTokenBag @tokens={{this.tokens}} @onChange={{this.onTokensChange}}/>
+        {{/if}}
+      </div>
+    </div>
+  {{/if}}
+  <TokenBagArea
+    class="game-board-token-bag"
+    @tokens={{this.tokens}}
+    @onEditClick={{this.onEditTokensClick}}
+    @onEditScenarioClick={{this.onEditScenarioClick}}
+  />
   <DeckArea class="game-board-deck" @cards={{this.cards}}/>
   <PlayArea class="game-board-play" @cards={{this.cards}}/>
 </div>

@@ -5,6 +5,6 @@ export default class InputComponent extends Component {
 
   @action onInput(event) {
     const {value} = event.target;
-    this.args.onInput(value);
+    this.args.onChange(value);
   }
 }

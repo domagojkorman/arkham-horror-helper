@@ -2,7 +2,7 @@
   <div class="token-bag-area-actions">
     <Button disabled={{not this.canDraw}} @icon="dice" @onClick={{this.onDrawNewClick}}/>
     <Button disabled={{not this.canDrawNext}} @icon="plus-one" @onClick={{this.onOneMoreClick}}/>
-    <Button @icon="edit" @onClick={{this.onEditClick}}/>
+    <Button @icon="edit" @onClick={{@onEditClick}}/>
   </div>
   <div class="token-bag-area-tokens">
     {{#each this.drawPile as |token|}}
@@ -10,8 +10,5 @@
         <Token @token={{token}}/>
       </button>
     {{/each}}
-  </div>
-  <div class="token-bag-area-background">
-    Token area
   </div>
 </div>

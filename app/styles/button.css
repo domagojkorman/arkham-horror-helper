@@ -27,6 +27,7 @@
 .button:disabled {
   background: linear-gradient(150deg, rgb(122, 122, 122), rgb(45, 37, 46));
   cursor: default;
+  opacity: 0.75;
 }
 
 .button:enabled:hover {
