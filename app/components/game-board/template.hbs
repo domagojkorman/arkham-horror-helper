@@ -8,12 +8,18 @@
       </div>
     </div>
   {{/if}}
-  <TokenBagArea
-    class="game-board-token-bag"
-    @tokens={{this.tokens}}
-    @onEditClick={{this.onEditTokensClick}}
-    @onEditScenarioClick={{this.onEditScenarioClick}}
-  />
-  <DeckArea class="game-board-deck" @cards={{this.cards}}/>
-  <PlayArea class="game-board-play" @cards={{this.cards}}/>
+  <div class="token-area">
+    <div class="token-area__actions">
+      <Button disabled={{not this.canDrawToken}} @icon="dice" @onClick={{this.onDrawTokenClick}}/>
+      <Button disabled={{not this.canDrawNextToken}} @icon="plus-one" @onClick={{this.onDrawNextTokenClick}}/>
+      <Button @icon="edit" @onClick={{fn this.setMode "tokens"}}/>
+    </div>
+    <div class="token-bag-area-tokens">
+      {{#each this.drawnTokens key="drawCount" as |token|}}
+        <button type="button" {{on "click" (fn this.onTokenClick token)}}>
+          <Token @token={{token}}/>
+        </button>
+      {{/each}}
+    </div>
+  </div>
 </div>

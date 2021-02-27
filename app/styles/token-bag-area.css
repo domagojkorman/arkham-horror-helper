@@ -1,3 +1,19 @@
+@keyframes appear {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  80% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
 .token-bag-area {
   position: relative;
 }
@@ -30,4 +46,5 @@
 
 .token-bag-area-tokens > * {
   margin: 8px;
+  animation: appear 250ms ease-out forwards;
 }
