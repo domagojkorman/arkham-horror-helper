@@ -65,16 +65,18 @@ export default class GameBoardComponent extends Component {
   // Deck
 
   get canDrawCard() {
-    return this.deck.length
+    return this.deck.length && !this.card;
   }
 
   @action onDrawCardClick() {
     if (this.deck.length) {
       this.card = this.deck[0];
+      this.deck = this.deck.slice(1);
+    } else {
+      this.onShuffleDeckClick();
+      this.onDrawCardClick();
     }
 
-    this.onShuffleDeckClick();
-    this.onDrawCardClick();
   }
 
   @action onShuffleDeckClick() {
@@ -82,7 +84,6 @@ export default class GameBoardComponent extends Component {
   }
 
   @action onDeckChange(cards) {
-    debugger;
     this.cards = cards;
     this.deck = createDeck(cards);
     this.deck = this.deck.filter((card) => {
@@ -91,5 +92,42 @@ export default class GameBoardComponent extends Component {
       return !inPlay && !inDiscard;
     });
     this.mode = Mode.IN_GAME;
+  }
+
+  @action onToDeckCardClick(deck, card) {
+    this.deck = [...this.deck, card];
+    if (deck === 'play') {
+      this.playDeck = this.playDeck.filter((playCard) => playCard.id !== card.id || playCard.nr !== card.nr);
+    } else if (deck === 'discard') {
+      this.discardDeck = this.discardDeck.filter((discardCard) => discardCard.id !== card.id || discardCard.nr !== card.nr);
+    }
+  }
+
+  @action onToPlayCardClick(deck, card) {
+    this.playDeck = [...this.playDeck, card];
+    if (deck === 'current') {
+      this.card = null;
+    } else if (deck === 'discard') {
+      this.discardDeck = this.discardDeck.filter((discardCard) => discardCard.id !== card.id || discardCard.nr !== card.nr);
+    }
+  }
+
+  @action onToDiscardCardClick(deck, card) {
+    this.discardDeck = [...this.discardDeck, card];
+    if (deck === 'current') {
+      this.card = null;
+    } else if (deck === 'play') {
+      this.playDeck = this.playDeck.filter((playCard) => playCard.id !== card.id || playCard.nr !== card.nr);
+    }
+  }
+
+  @action onRemoveCardClick(deck, card) {
+    if (deck === 'current') {
+      this.card = null;
+    } else if (deck === 'play') {
+      this.playDeck = this.playDeck.filter((playCard) => playCard.id !== card.id || playCard.nr !== card.nr);
+    } else if (deck === 'discard') {
+      this.discardDeck = this.discardDeck.filter((discardCard) => discardCard.id !== card.id || discardCard.nr !== card.nr);
+    }
   }
 }

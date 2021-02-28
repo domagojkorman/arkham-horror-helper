@@ -1,6 +1,22 @@
+@keyframes appear {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  80% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
 .game-board {
   display: grid;
-  grid-template-columns: 4fr 400px;
+  grid-template-columns: 1fr 400px;
   grid-template-rows: repeat(2, 1fr);
   overflow: hidden;
   height: 100%;
@@ -39,4 +55,33 @@
 .game-board-tokens {
   grid-column: 2;
   grid-row: 1;
+}
+
+.token-area {
+  grid-row: 2;
+  grid-column: 2;
+}
+
+.token-area__actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.token-area__actions > * {
+  margin: 12px;
+}
+
+.token-area__tokens {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.token-area__tokens > * {
+  margin: 12px;
+  animation: appear 250ms ease-out forwards;
 }
