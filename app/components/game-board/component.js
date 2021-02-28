@@ -3,7 +3,7 @@ import {action} from '@ember/object';
 import {tracked} from '@glimmer/tracking';
 import cards from 'arkham-horror-helper/models/cards';
 import CardModel from 'arkham-horror-helper/models/card';
-import {randomItem} from 'arkham-horror-helper/utils/shuffle';
+import {randomItem, shuffleItems, createDeck} from 'arkham-horror-helper/utils/shuffle';
 
 const Mode = {
   IN_GAME: 'game',
@@ -20,20 +20,17 @@ export default class GameBoardComponent extends Component {
   @tracked deck = []
   @tracked playDeck = []
   @tracked discardDeck = []
+  @tracked card;
   @tracked mode = Mode.IN_GAME
 
-  get isEditMode() {
-    return this.mode !== Mode.IN_GAME
+  @action setMode(mode) {
+    this.mode = mode;
   }
-
 
   // TOKENS
+
   get tokenBag() {
     return this.tokens.filter((token) => !this.drawnTokens.includes(token));
-  }
-
-  get isEditTokensMode() {
-    return this.mode === Mode.EDIT_TOKENS;
   }
 
   get canDrawToken() {
@@ -60,16 +57,39 @@ export default class GameBoardComponent extends Component {
     this.drawnTokens = this.drawnTokens.filter((t) => t !== token);
   }
 
-  @action setMode(mode) {
-    this.mode = mode;
-  }
-
-  @action onEditTokensClick() {
-    this.mode = Mode.EDIT_TOKENS;
-  }
-
   @action onTokensChange(tokens) {
     this.tokens = tokens;
+    this.mode = Mode.IN_GAME;
+  }
+
+  // Deck
+
+  get canDrawCard() {
+    return this.deck.length
+  }
+
+  @action onDrawCardClick() {
+    if (this.deck.length) {
+      this.card = this.deck[0];
+    }
+
+    this.onShuffleDeckClick();
+    this.onDrawCardClick();
+  }
+
+  @action onShuffleDeckClick() {
+    this.deck = shuffleItems(this.deck);
+  }
+
+  @action onDeckChange(cards) {
+    debugger;
+    this.cards = cards;
+    this.deck = createDeck(cards);
+    this.deck = this.deck.filter((card) => {
+      const inPlay = this.playDeck.find((playCard) => playCard.id === card.id && playCard.nr === card.nr);
+      const inDiscard = this.discardDeck.find((discardCard) => discardCard.id === card.id && discardCard.nr === card.nr);
+      return !inPlay && !inDiscard;
+    });
     this.mode = Mode.IN_GAME;
   }
 }

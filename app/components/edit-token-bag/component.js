@@ -1,7 +1,6 @@
 import Component from '@glimmer/component';
 import tokens from 'arkham-horror-helper/models/tokens';
 import {action} from '@ember/object';
-import {A as emberArray} from '@ember/array';
 import {tracked} from '@glimmer/tracking';
 
 export default class EditTokenBagComponent extends Component {

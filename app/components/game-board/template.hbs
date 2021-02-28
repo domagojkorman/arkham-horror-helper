@@ -1,9 +1,11 @@
 <div class="game-board">
-  {{#if this.isEditMode}}
+  {{#if (not (equal this.mode "game"))}}
     <div class="game-board-dialog">
       <div class="game-board-dialog-content">
-        {{#if this.isEditTokensMode}}
+        {{#if (equal this.mode "tokens")}}
           <EditTokenBag @tokens={{this.tokens}} @onChange={{this.onTokensChange}}/>
+        {{else if (equal this.mode "deck")}}
+          <EditDeck @cards={{this.cards}} @onChange={{this.onDeckChange}}/>
         {{/if}}
       </div>
     </div>
@@ -14,12 +16,40 @@
       <Button disabled={{not this.canDrawNextToken}} @icon="plus-one" @onClick={{this.onDrawNextTokenClick}}/>
       <Button @icon="edit" @onClick={{fn this.setMode "tokens"}}/>
     </div>
-    <div class="token-bag-area-tokens">
+    <div class="token-area__drawn">
       {{#each this.drawnTokens key="drawCount" as |token|}}
         <button type="button" {{on "click" (fn this.onTokenClick token)}}>
           <Token @token={{token}}/>
         </button>
       {{/each}}
     </div>
+  </div>
+  <div class="card-area">
+    <Button disabled={{not this.canDrawCard}} @onClick={{this.onDrawCardClick}}>
+      Draw
+    </Button>
+    <Button @onClick={{this.onShuffleDeckClick}}>
+      Shuffle
+    </Button>
+    <Button @onClick={{fn this.setMode "reorder"}}>
+      Reorder
+    </Button>
+    <Button @onClick={{fn this.setMode "deck"}}>
+      Edit
+    </Button>
+    {{#if this.drawnCard}}
+      <div class="card-area__card">
+        <Card @card={{this.drawnCard}} class="card-area__card-image"/>
+      </div>
+      <Button @onClick={{this.onPlayCardClick}}>
+        Play
+      </Button>
+      <Button @onClick={{this.onDiscardCardClick}}>
+        Discard
+      </Button>
+      <Button @onClick={{this.onRemoveCardClick}}>
+        Remove
+      </Button>
+    {{/if}}
   </div>
 </div>

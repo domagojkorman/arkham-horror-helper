@@ -1,0 +1,55 @@
+.edit-deck {
+  height: 80vh;
+  width: 90vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-deck-cols {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  overflow: scroll;
+}
+
+.edit-deck__col {
+  flex: 1;
+  padding: 0 16px;
+  overflow: scroll;
+}
+
+.edit-deck__row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 24px;
+  font-weight: 600;
+  margin-top: 16px;
+}
+
+.edit-deck__row.is-card {
+  margin-left: 24px;
+}
+
+.edit-deck__card {
+  width: 160px;
+}
+
+.edit-deck__button {
+  margin: 12px;
+}
+
+.edit-deck__input {
+  height: 40px;
+  padding: 16px;
+  font-size: 16px;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.edit-deck__buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 24px;
+}

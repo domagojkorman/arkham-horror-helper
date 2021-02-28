@@ -8,16 +8,29 @@ function randomItem(items) {
 
 function shuffleItems(items) {
   const shuffledItems = [];
-  const itemsCopy = [...items];
+  let itemsCopy = [...items];
   for(let i = 0; i < items.length; i++) {
-    const randomItem = randomItem(itemsCopy);
-    itemsCopy = itemsCopy.filter((item) => item !== randomItem);
-    shuffledItems.push(randomItem);
+    const randomizedItem = randomItem(itemsCopy);
+    itemsCopy = itemsCopy.filter((item) => item !== randomizedItem);
+    shuffledItems.push(randomizedItem);
   }
 
   return shuffledItems;
 }
 
+function createDeck(cards) {
+  const deck = [];
+  cards.forEach((card) => {
+    for (let i = 0; i < card.count; i++) {
+      deck.push({...card, nr: i});
+    }
+  });
+
+  return shuffleItems(deck);
+}
+
 export {
-  randomItem
+  randomItem,
+  shuffleItems,
+  createDeck
 }

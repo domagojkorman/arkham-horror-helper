@@ -1,0 +1,36 @@
+<div class="edit-deck" ...attributes>
+  <div class="edit-deck-cols">
+    <div class="edit-deck__col">
+      <input class="edit-deck__input" {{on "input" this.onSearchChange}} placeholder="Search..."/>
+      {{#each this.filteredSets as |set|}}
+        <div class="edit-deck__row">
+          {{set.name}}
+          <Button class="edit-deck__button" @icon="minus" @onClick={{fn this.onSetRemoveClick set}} />
+          <Button class="edit-deck__button" @icon="plus" @onClick={{fn this.onSetAddClick set}} />
+        </div>
+
+        {{#each set.cards as |card|}}
+          <div class="edit-deck__row is-card">
+            <Card class="edit-deck__card" @card={{card}} />
+            <Button class="edit-deck__button" @icon="minus" @onClick={{fn this.onCardRemoveClick card}} />
+            <Button class="edit-deck__button" @icon="plus" @onClick={{fn this.onCardAddClick card}} />
+          </div>
+        {{/each}}
+      {{/each}}
+    </div>
+    <div class="edit-deck__col">
+      {{#each this.cards key="count" as |card|}}
+        <div class="edit-deck__row is-card">
+          <Card class="edit-deck__card" @card={{card}} />
+          <Button class="edit-deck__button" @icon="minus" @onClick={{fn this.onCardDecrementClick card}} />
+          <span class="edit-deck__count">{{card.count}}</span>
+          <Button class="edit-deck__button" @icon="plus" @onClick={{fn this.onCardIncrementClick card}} />
+        </div>
+      {{/each}}
+    </div>
+  </div>
+  <div class="edit-deck__buttons">
+    <Button class="edit-deck__button" @onClick={{fn @onChange this.cards}}>Confirm</Button>
+    <Button class="edit-deck__button" @onClick={{fn @onChange @cards}}>Discard</Button>
+  </div>
+</div>
