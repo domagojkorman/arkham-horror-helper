@@ -1,0 +1,24 @@
+<div class="reorder-deck" ...attributes>
+  <div class="reorder-deck__grid">
+    {{#each this.cards key="order" as |card|}}
+      <div class="reorder-deck__item">
+        <Card @card={{card}} @onClick={{this.onCardClick}}/>
+        {{#if card.order}}
+          <div class="reorder-deck__overlay">
+            {{#if (equal card.order "S")}}
+              {{svg-jar (concat "ic-dice" @icon) class="reorder-deck__overlay-image"}}
+            {{else}}
+              <div class="reorder-deck__overlay-text">
+                {{card.order}}
+              </div>
+            {{/if}}
+          </div>
+        {{/if}}
+      </div>
+    {{/each}}
+  </div>
+  <div class="reorder-deck__buttons">
+    <Button @onClick={{this.onConfirmClick}}>Confirm</Button>
+    <Button @onClick={{this.onDiscardClick}}>Discard</Button>
+  </div>
+</div>

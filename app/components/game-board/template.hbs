@@ -1,4 +1,7 @@
-<div class="game-board">
+<div
+  class="game-board"
+  {{did-insert this.onInit}}
+>
   {{#if (not (equal this.mode "game"))}}
     <div class="game-board-dialog">
       <div class="game-board-dialog-content">
@@ -6,6 +9,8 @@
           <EditTokenBag @tokens={{this.tokens}} @onChange={{this.onTokensChange}}/>
         {{else if (equal this.mode "deck")}}
           <EditDeck @cards={{this.cards}} @onChange={{this.onDeckChange}}/>
+        {{else if (equal this.mode "reorder")}}
+          <ReorderDeck @cards={{this.deck}} @onChange={{this.onOrderChange}}/>
         {{/if}}
       </div>
     </div>
@@ -25,8 +30,26 @@
     </div>
   </div>
   <div class="card-area">
+    {{#if this.card}}
+      <div class="card-area__card">
+        <Card @card={{this.card}} class="card-area__card-image"/>
+      </div>
+      <div class="card-area__actions">
+        <Button @onClick={{fn this.onToPlayCardClick 'current' this.card}}>
+          Into Play
+        </Button>
+        <Button @onClick={{fn this.onToDiscardCardClick 'current' this.card}}>
+          To Discard
+        </Button>
+        <Button @onClick={{fn this.onRemoveCardClick 'current' this.card}}>
+          Remove
+        </Button>
+      </div>
+    {{/if}}
+  </div>
+  <div class="actions-area">
     <Button disabled={{not this.canDrawCard}} @onClick={{this.onDrawCardClick}}>
-      Draw
+      Draw ({{this.deck.length}})
     </Button>
     <Button @onClick={{this.onShuffleDeckClick}}>
       Shuffle
@@ -34,58 +57,56 @@
     <Button @onClick={{fn this.setMode "reorder"}}>
       Reorder
     </Button>
+    <Button disabled={{not this.canTogglePlayArea}} @onClick={{fn this.togglePlayArea true}}>
+      Show Play Area ({{this.playDeck.length}})
+    </Button>
     <Button @onClick={{fn this.setMode "deck"}}>
       Edit
     </Button>
-    {{#if this.card}}
-      <div class="card-area__card">
-        <Card @card={{this.card}} class="card-area__card-image"/>
-      </div>
-      <Button @onClick={{fn this.onToPlayCardClick 'current' this.card}}>
-        Play
-      </Button>
-      <Button @onClick={{fn this.onToDiscardCardClick 'current' this.card}}>
-        Discard
-      </Button>
-      <Button @onClick={{fn this.onRemoveCardClick 'current' this.card}}>
-        Remove
-      </Button>
-    {{/if}}
   </div>
-  <div class="play-area">
+  <div class="play-area {{if this.showPlayArea "is-shown"}}">
     {{#if this.playDeck}}
-      <h1>In play</h1>
-      {{#each this.playDeck as |card|}}
-        <div class="play-area__item">
-          <Card class="play-area__card" @card={{card}}/>
-          <Button @onClick={{fn this.onToDeckCardClick 'play' card}}>
-            Deck
-          </Button>
-          <Button @onClick={{fn this.onToDiscardCardClick 'play' card}}>
-            Discard
-          </Button>
-          <Button @onClick={{fn this.onRemoveCardClick 'play' card}}>
-            Remove
-          </Button>
-        </div>
-      {{/each}}
+      <h1 class="play-area__title">In play</h1>
+      <div class="play-area__grid">
+        {{#each this.playDeck as |card|}}
+          <div class="play-area__item">
+            <Card class="play-area__card" @card={{card}}/>
+            <Button @onClick={{fn this.onToDeckCardClick 'play' card}}>
+              To Deck
+            </Button>
+            <Button @onClick={{fn this.onToDiscardCardClick 'play' card}}>
+              To Discard
+            </Button>
+            <Button @onClick={{fn this.onRemoveCardClick 'play' card}}>
+              Remove
+            </Button>
+          </div>
+        {{/each}}
+      </div>
     {{/if}}
     {{#if this.discardDeck}}
-      <h1>Discard</h1>
-      {{#each this.discardDeck as |card|}}
-        <div class="play-area__item">
-          <Card class="play-area__card" @card={{card}}/>
-          <Button @onClick={{fn this.onToDeckCardClick 'play' card}}>
-            Deck
-          </Button>
-          <Button @onClick={{fn this.onToPlayCardClick 'play' card}}>
-            Play
-          </Button>
-          <Button @onClick={{fn this.onRemoveCardClick 'play' card}}>
-            Remove
-          </Button>
-        </div>
-      {{/each}}
+      <div class="play-area__discard-row">
+        <h1 class="play-area__title">Discard</h1>
+        <Button @onClick={{this.onDiscardIntoDeckClick}}>
+          All to Deck
+        </Button>
+      </div>
+      <div class="play-area__grid">
+        {{#each this.discardDeck as |card|}}
+          <div class="play-area__item">
+            <Card class="play-area__card" @card={{card}}/>
+            <Button @onClick={{fn this.onToDeckCardClick 'play' card}}>
+              To Deck
+            </Button>
+            <Button @onClick={{fn this.onToPlayCardClick 'play' card}}>
+              Into Play
+            </Button>
+            <Button @onClick={{fn this.onRemoveCardClick 'play' card}}>
+              Remove
+            </Button>
+          </div>
+        {{/each}}
+      </div>
     {{/if}}
   </div>
 </div>

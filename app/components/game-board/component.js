@@ -9,7 +9,7 @@ const Mode = {
   IN_GAME: 'game',
   EDIT_TOKENS: 'tokens',
   EDIT_DECK: 'deck',
-  EDIT_PLAY_AREA: 'play',
+  REORDER_DECK: 'reorder',
 }
 export default class GameBoardComponent extends Component {
 
@@ -22,9 +22,19 @@ export default class GameBoardComponent extends Component {
   @tracked discardDeck = []
   @tracked card;
   @tracked mode = Mode.IN_GAME
+  @tracked showPlayArea = false;
 
   @action setMode(mode) {
     this.mode = mode;
+  }
+
+  @action onInit(event) {
+    document.addEventListener('keydown', (event) => {
+      if (event.code === 'Escape') {
+        this.mode = Mode.IN_GAME;
+        this.showPlayArea = false;
+      }
+    })
   }
 
   // TOKENS
@@ -129,5 +139,25 @@ export default class GameBoardComponent extends Component {
     } else if (deck === 'discard') {
       this.discardDeck = this.discardDeck.filter((discardCard) => discardCard.id !== card.id || discardCard.nr !== card.nr);
     }
+  }
+
+  // Play area
+
+  @action togglePlayArea(value) {
+    this.showPlayArea = value;
+  }
+
+  get canTogglePlayArea() {
+    return this.playDeck.length || this.discardDeck.length;
+  }
+
+  @action onDiscardIntoDeckClick() {
+    this.deck = [...this.deck, ...this.discardDeck];
+    this.discardDeck = [];
+  }
+
+  @action onOrderChange(deck) {
+    this.deck = deck;
+    this.mode = Mode.IN_GAME;
   }
 }

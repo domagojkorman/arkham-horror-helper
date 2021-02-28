@@ -1,23 +1,23 @@
 .button {
   display: block;
   color: #fff;
-  padding: 8px 12px;
+  padding: 16px;
   border-radius: 4px;
-  font-size: 14px;
+  font-size: 18px;
   text-transform: uppercase;
   background: linear-gradient(150deg, rgb(99, 15, 102), rgb(76, 31, 80));
   cursor: pointer;
   transition: filter 200ms;
-  min-width: 80px;
+  min-width: 120px;
   box-shadow: 2px 2px 4px #777;
 }
 
 .button[theme="icon"] {
   border-radius: 100px;
-  height: 48px;
-  width: 48px;
+  height: 64px;
+  width: 64px;
   min-width: unset;
-  padding: 8px;
+  padding: 12px;
 }
 
 .button-img {
