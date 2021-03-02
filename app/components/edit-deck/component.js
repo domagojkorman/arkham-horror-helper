@@ -25,7 +25,11 @@ export default class EditDeckComponent extends Component {
   @tracked search = '';
 
   get filteredSets() {
-    return ALL_SETS.filter((set) => set.name.toLowerCase().includes(this.search) || set.cards.some((card) => card.name.toLowerCase().includes(this.search)));
+    if (this.search.trim() === '') {
+      return ALL_SETS;
+    }
+
+    return ALL_SETS.filter((set) => set.name.toLowerCase().includes(this.search.trim()) || set.cards.some((card) => card.name.toLowerCase().includes(this.search.trim())));
   }
 
   @action onSetRemoveClick(set) {
