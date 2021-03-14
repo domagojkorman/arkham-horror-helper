@@ -70,7 +70,7 @@
       <div class="play-area__grid">
         {{#each this.playDeck as |card|}}
           <div class="play-area__item">
-            <Card class="play-area__card" @card={{card}}/>
+            <Card class="play-area__card {{if (equal card this.clickedCard) "is-clicked"}}" @card={{card}} @onClick={{this.toggleCard}}/>
             <Button @onClick={{fn this.onToDeckCardClick 'play' card}}>
               To Deck
             </Button>
@@ -94,7 +94,7 @@
       <div class="play-area__grid">
         {{#each this.discardDeck as |card|}}
           <div class="play-area__item">
-            <Card class="play-area__card" @card={{card}}/>
+            <Card class="play-area__card {{if (equal card this.clickedCard) "is-clicked"}}" @card={{card}} @onClick={{this.toggleCard}}/>
             <Button @onClick={{fn this.onToDeckCardClick 'play' card}}>
               To Deck
             </Button>

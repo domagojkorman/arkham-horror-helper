@@ -23,6 +23,7 @@ export default class GameBoardComponent extends Component {
   @tracked card;
   @tracked mode = Mode.IN_GAME
   @tracked showPlayArea = false;
+  @tracked clickedCard = null;
 
   @action setMode(mode) {
     this.mode = mode;
@@ -31,8 +32,12 @@ export default class GameBoardComponent extends Component {
   @action onInit(event) {
     document.addEventListener('keydown', (event) => {
       if (event.code === 'Escape') {
-        this.mode = Mode.IN_GAME;
-        this.showPlayArea = false;
+        if (this.clickedCard) {
+          this.clickedCard = null;
+        } else {
+          this.mode = Mode.IN_GAME;
+          this.showPlayArea = false;
+        }
       }
     })
   }
@@ -159,5 +164,9 @@ export default class GameBoardComponent extends Component {
   @action onOrderChange(deck) {
     this.deck = deck;
     this.mode = Mode.IN_GAME;
+  }
+
+  @action toggleCard(card) {
+    this.clickedCard = this.clickedCard === card ? null : card;
   }
 }
