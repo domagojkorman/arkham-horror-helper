@@ -116,6 +116,7 @@
 }
 
 .play-area {
+  position: relative;
   padding: 24px;
   background: #dddd;
   position: absolute;
@@ -153,6 +154,7 @@
 
 .play-area__card.is-clicked {
   transform: scale(2);
+  z-index: 1;
 }
 
 .play-area__discard-row {
