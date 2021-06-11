@@ -4,7 +4,8 @@ import {action} from '@ember/object';
 import {tracked} from '@glimmer/tracking';
 
 const ALL_SETS = allCards.reduce((sets, card) => {
-  if (!card.encounter || ['location', 'agenda', 'act', 'scenario'].includes(card.type)) {
+  const isEdgeCase = ['02324', '02325', '02326', '02327', '02328'].includes(card.id);
+  if (!isEdgeCase && (!card.encounter || ['location', 'agenda', 'act', 'scenario'].includes(card.type))) {
     return sets;
   }
 
